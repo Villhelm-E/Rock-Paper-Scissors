@@ -7,7 +7,7 @@
     <body>
         <script>
             function random(num) {
-                return Math.floor(Math.random() * (num + 1))
+                return Math.floor(Math.random() * (num + 1));
             }
             
             function computerPlay() {
@@ -26,7 +26,29 @@
                         break;
                     default:
                         hand = "";
-                        console.log("Something went wrong when choosing paper, rock, or scissors")
+                        console.log("Something went wrong when choosing paper, rock, or scissors");
+                }
+
+                return hand;
+            }
+
+            function playRound(playerSelection, computerSelection) {
+                let win;
+                
+                if (playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "paper" || playerSelection == "paper" && computerSelection == "rock") {
+                    win = "player";
+                } else if (computerSelection == "rock" && playerSelection == "scissors" || computerSelection == "scissors" && playerSelection == "paper" || computerSelection == "paper" && playerSelection == "rock") {
+                    win = "computer";
+                } else {
+                    win = "tie";
+                }
+
+                if (win == "player") {
+                    return `You win! ${playerSelection} beats ${computerSelection}`;
+                } else if (win = "computer") {
+                    return `You lose! ${computerSelection} beats ${playerSelection}`;
+                } else {
+                    return `It's a tie!`;
                 }
             }
         </script>
