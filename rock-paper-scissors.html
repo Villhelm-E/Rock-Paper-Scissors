@@ -6,7 +6,29 @@
     </head>
     <body>
         <script>
+            function random(num) {
+                return Math.floor(Math.random() * (num + 1))
+            }
             
+            function computerPlay() {
+                let play = random(3);
+                let hand;
+
+                switch (play) {
+                    case 0:
+                        hand = "rock";
+                        break;
+                    case 1:
+                        hand = "paper";
+                        break;
+                    case 2:
+                        hand = "scissors";
+                        break;
+                    default:
+                        hand = "";
+                        console.log("Something went wrong when choosing paper, rock, or scissors")
+                }
+            }
         </script>
     </body>
 </html>
