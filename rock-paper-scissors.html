@@ -51,6 +51,24 @@
                     return `It's a tie!`;
                 }
             }
+
+            function game() {
+                let playerSelection;
+                let computerSelection;
+                let outcome;
+
+                for (let i; i <= 5; i++) {
+                    playerSelection = prompt("Rock, Paper, or Scissors?");
+                    //clean up input
+                    playerSelection = playerSelection.toLowerCase();
+
+                    computerSelection = computerPlay();
+
+                    outcome = playRound(playerSelection, computerSelection);
+
+                    console.log(outcome);
+                }
+            }
         </script>
     </body>
 </html>
