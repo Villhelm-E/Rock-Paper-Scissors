@@ -5,16 +5,43 @@
         <meta charset="UTF-8">
     </head>
     <body>
+        
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+        
+        <div id="status">
+            <p id="player">Your turn</p>
+            <p id="computer"></p>
+            <p id="win"></p>
+            <p id="tracker"></p>
+        </div>
+
         <script>
+            //Globals
+            var wins = 0;
+            var losses = 0;
+            var ties = 0;
+            
+            //Constants
+            const compChoice = document.querySelector('#computer');
+            const playerChoice = document.querySelector('#player');
+            const win = document.querySelector('#win');
+            const tracker = document.querySelector('#tracker');
+            
             //generates a random number from 0 to num (exclusive)
             function random(num) {
                 return Math.floor(Math.random() * num);
             }
             
+            //Chooses a random move and populates the computer paragraph
             function computerPlay() {
+                
+                //3 options, choose a random one
                 let play = random(3);
                 let hand;
 
+                //index random number with move
                 switch (play) {
                     case 0:
                         hand = "rock";
@@ -26,51 +53,60 @@
                         hand = "scissors";
                         break;
                     default:
+                        //handle error
                         hand = "";
-                        console.log("Something went wrong when choosing paper, rock, or scissors");
+                        compChoice.textContent = "Something went wrong when choosing paper, rock, or scissors";
+                        playerChoice.textContent = "";
+                        win.textContent = "";
+                        tracker.textContent = "";
                 }
 
-                console.log(`Computer chose ${hand}`)
-
+                //update the computer paragraph
+                compChoice.textContent = `Computer chose ${hand}`
+                
                 return hand;
             }
 
             function playRound(playerSelection, computerSelection) {
+                
+                //win conditions
                 if ((playerSelection == "rock" && computerSelection == "scissors") || 
                    (playerSelection == "scissors" && computerSelection == "paper") || 
                    (playerSelection == "paper" && computerSelection == "rock")) {
                     
+                    //update tracker
+                    wins += 1;
                     return `You win! ${playerSelection} beats ${computerSelection}`;
                 
+                //lose conditions
                 } else if ((computerSelection == "rock" && playerSelection == "scissors") || 
                    (computerSelection == "scissors" && playerSelection == "paper") || 
                    (computerSelection == "paper" && playerSelection == "rock")) {
                     
+                    //update tracker
+                    losses += 1;
                     return `You lose! ${computerSelection} beats ${playerSelection}`;
+                //default to tie
                 } else {
+                    //update tracker
+                    ties += 1;
                     return `It's a tie!`;
                 }
             }
 
-            function game() {
-                let playerSelection;
-                let computerSelection;
-                let outcome;
+            //select all buttons
+            const buttons = document.querySelectorAll('button');
 
-                for (i = 0; i < 5; i++) {
-                    playerSelection = prompt("Rock, Paper, or Scissors?");
-                    //clean up input
-                    playerSelection = playerSelection.toLowerCase();
-
-                    computerSelection = computerPlay();
-
-                    outcome = playRound(playerSelection, computerSelection);
-
-                    console.log(outcome);
-                }
-            }
+            //add click event listener to all buttons
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    //update paragraphs
+                    playerChoice.textContent = "You chose " + button.id;
+                    win.textContent = playRound(button.id, computerPlay());
+                    tracker.textContent = wins + " Wins, " + losses + " Losses, " + ties + " Ties";
+                });
+            });
             
-            game();
         </script>
     </body>
 </html>
